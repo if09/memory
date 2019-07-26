@@ -3,6 +3,9 @@
  */
 
 
+
+
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -12,7 +15,7 @@
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -25,6 +28,15 @@ function shuffle(array) {
     return array;
 }
 
+const allCards = document.querySelectorAll('.card');
+
+for (const cards of allCards) {
+    cards.addEventListener('click', function () {
+        cards.classList.add('open', 'show');
+    })
+}
+
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -36,3 +48,6 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+
