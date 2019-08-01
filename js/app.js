@@ -1,23 +1,24 @@
 /*
- * Create a list that holds all of your cards
+ * Create a list that holds all of your cards  
  */
 
-     let cards = ["fa-diamond","fa-paper-plane-o","fa-anchor","fa-bolt","fa-cube","fa-anchor","fa-leaf","fa-bicycle","fa-diamond","fa-bomb","fa-leaf","fa-bomb","fa-bolt","fa-bicycle","fa-paper-plane-o","fa-cube"]
+let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-bomb", "fa-leaf", "fa-bomb", "fa-bolt", "fa-bicycle", "fa-paper-plane-o", "fa-cube"]
 
-    function init(){
-        let deck = document.querySelector('.deck')
-        let cardHTML = cards.map(function(card){
-            return buildCard(card);
-        })
-        deck.innerHTML = cardHTML.join(" ");
+
+let listElement = document.createElement('li');
+console.log(listElement)
+
+// Funktion umbauen sodass die HTML strucktur wie im default aussieht mit einem i in einer li und den entsprechenden classen
+
+
+function createHTML() {
+    for (const card of cards) {
+        const listElement = document.createElement('li');
+        listElement.classList.add('card');
+        console.log(listElement);
+
     }
-    init();
- 
- 
-     function buildCard(card){
-     return `<li class="card"><i class="fa ${card}"></i></li>`;
- }
-
+}
 
 
 
