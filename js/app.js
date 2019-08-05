@@ -3,26 +3,21 @@
  */
 
 let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-bomb", "fa-leaf", "fa-bomb", "fa-bolt", "fa-bicycle", "fa-paper-plane-o", "fa-cube"]
-
-
-let listElement = document.createElement('li');
-console.log(listElement)
-
-// Funktion umbauen sodass die HTML strucktur wie im default aussieht mit einem i in einer li und den entsprechenden classen
+const deck = document.querySelector('.deck')
 
 
 function createHTML() {
     for (const card of cards) {
         const listElement = document.createElement('li');
-        listElement.classList.add('card');
-        console.log(listElement);
-
+        const iconElement = document.createElement('i');
+        listElement.classList.add("card");
+        iconElement.classList.add(`${card}`);
+        listElement.appendChild(iconElement);
+        deck.appendChild(listElement);
     }
 }
 
-function testGit() {
-    return alert('Testing if git ist connected');
-}
+
 
 
 
