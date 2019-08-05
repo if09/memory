@@ -20,6 +20,10 @@ function createHTML() {
     }
 }
 
+function testGit() {
+    return alert('Testing if git ist connected');
+}
+
 
 
 
