@@ -1,33 +1,119 @@
-/*
- * Create a list that holds all of your cards  
- */
-const cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-bomb", "fa-leaf", "fa-bomb", "fa-bolt", "fa-bicycle", "fa-paper-plane-o", "fa-cube"];
+let moves = 0;
+let matchCards = 0;
 let openCards = [];
-const deck = document.querySelector('.deck');
+let stars = document.querySelector('.stars')
+let starClass = ['fa-star']
+const classList = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o', 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf', 'fa-leaf', 'fa-bomb', 'fa-bomb', 'fa-bicycle', 'fa-bicycle'];
+let moveElement = document.querySelector(".moves");
+let restartButton = document.querySelector(".restart");
+let congrats = document.querySelector('h1');
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+
+shuffle(classList);
+createHTML();
+createStars()
+activateListeners();
+
+function createStars() {
+    for (star of starClass) {
+        console.log(star)
+        const starLi = document.createElement('li');
+        const starLi1 = document.createElement('li');
+        const starLi2 = document.createElement('li');
+        starLi.innerHTML = `<i class="fa ${starClass}"></i>`;
+        starLi1.innerHTML = `<i class="fa ${starClass}"></i>`;
+        starLi2.innerHTML = `<i class="fa ${starClass}"></i>`;
+        stars.appendChild(starLi);
+        stars.appendChild(starLi1);
+        stars.appendChild(starLi2);
+    }
+
+
+}
+
+
+
+// Functionality to create Html structure
 function createHTML() {
-    for (const card of cards) {
-        const listElement = document.createElement('li');
-        const iconElement = document.createElement('i');
-        listElement.classList.add("card");
-        iconElement.classList.add('fa', `${card}`);
-        listElement.appendChild(iconElement);
-        deck.appendChild(listElement);
-
+    for (card of classList) {
+        const li = document.createElement('li');
+        li.classList = 'card';
+        li.innerHTML = `<i class="fa ${card}"></i>`;
+        const cardDeck = document.querySelector('.deck');
+        cardDeck.appendChild(li);
     }
 }
 
-createHTML();
+function activateListeners() {
+    const deckOfCards = document.querySelector('.deck');
+    deckOfCards.addEventListener('click', selectCards);
+}
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+function deactivateListeners() {
+    const deckOfCards = document.querySelector('.deck');
+    deckOfCards.removeEventListener('click', selectCards);
+}
+
+
+
+
+function selectCards(e) {
+    if (e.target.className === 'card') {
+        e.target.classList.add('open', 'show');
+        openCards.push(e.target);
+        if (openCards.length === 2) {
+            compareCards();
+        }
+    }
+}
+
+
+
+
+
+function compareCards() {
+    moves += 1;
+    moveElement.innerHTML = moves
+    deactivateListeners();
+
+    if (openCards[0].innerHTML === openCards[1].innerHTML) {
+        setTimeout(cardsMatch, 300);
+    } else {
+        setTimeout(cardsDontMatch, 800);
+    }
+
+}
+
+function cardsMatch() {
+    openCards[0].classList.add('match');
+    openCards[1].classList.add('match');
+    openCards[0].classList.remove('open', 'show');
+    openCards[1].classList.remove('open', 'show');
+    matchCards += 2;
+    console.log(matchCards)
+    if (matchCards === 16) {
+        setTimeout(gameWin, 400);
+    }
+    openCards = [];
+    activateListeners();
+}
+
+function cardsDontMatch() {
+    openCards[0].classList.remove('open', 'show');
+    openCards[1].classList.remove('open', 'show');
+    openCards = [];
+    activateListeners();
+}
+
+function gameWin() {
+    congrats.innerHTML = "Congratulations, you have won!"
+}
+
+
 function shuffle(array) {
-    let currentIndex = cards.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -35,53 +121,10 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
-/*
- * set up the event listener for a card. 
- If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
 
-
-const clickedCards = document.querySelectorAll('.card');
-
-
-for (clickedCard of clickedCards) {
-    clickedCard.addEventListener("click", function (clickedCard) {
-        displayCard(clickedCard)
-        addCard(clickedCard)
-    })
-}
-
-function displayCard(e) {
-    e.target.classList.add("open", "show");
-}
-
-function addCard(e) {
-    console.log("Vor dem Push", openCards);
-    console.log("Clicked Element", e.target.className);
-    if (e.target.className === "card open show") {
-        openCards.push(e.target)
-    } else {
-        console.log("Sieht die Klassen nicht")
-    }
-    console.log("Nach dem Push", openCards);
-
-}
-
-
-
-
-
-
-
-
+restartButton.addEventListener("click", function () {
+    location.reload(true);
+})
