@@ -107,6 +107,7 @@ function cardsDontMatch() {
 
 function gameWin() {
     congrats.innerHTML = "Congratulations, you have won!"
+    showModul()
 }
 
 
@@ -126,5 +127,18 @@ function shuffle(array) {
 
 
 restartButton.addEventListener("click", function () {
+    location.reload(true);
+})
+
+
+let playAgainModul = document.querySelector('.playAgain');
+
+function showModul(){
+    playAgainModul.classList.add('showPlayAgain');
+}
+
+const yesButton = document.querySelector('.yesButton');
+
+yesButton.addEventListener('click', function(){
     location.reload(true);
 })

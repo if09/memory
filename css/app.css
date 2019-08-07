@@ -84,7 +84,9 @@ h1 {
 /*
  * Styles for the Score Panel
  */
-
+#timer{
+    margin-left: 10px;
+}
 .score-panel {
     text-align: left;
     width: 345px;
@@ -106,4 +108,12 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+.playAgain{
+    display: none;
+}
+
+.showPlayAgain{
+    display: block;
 }
