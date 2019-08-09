@@ -16,7 +16,6 @@ activateListeners();
 
 function createStars() {
     for (star of starClass) {
-        console.log(star)
         const starLi = document.createElement('li');
         const starLi1 = document.createElement('li');
         const starLi2 = document.createElement('li');
@@ -41,6 +40,8 @@ function createHTML() {
         li.innerHTML = `<i class="fa ${card}"></i>`;
         const cardDeck = document.querySelector('.deck');
         cardDeck.appendChild(li);
+     
+        
     }
 }
 
@@ -67,10 +68,6 @@ function selectCards(e) {
     }
 }
 
-
-
-
-
 function compareCards() {
     moves += 1;
     moveElement.innerHTML = moves
@@ -81,7 +78,6 @@ function compareCards() {
     } else {
         setTimeout(cardsDontMatch, 800);
     }
-
 }
 
 function cardsMatch() {
@@ -90,7 +86,6 @@ function cardsMatch() {
     openCards[0].classList.remove('open', 'show');
     openCards[1].classList.remove('open', 'show');
     matchCards += 2;
-    console.log(matchCards)
     if (matchCards === 16) {
         setTimeout(gameWin, 400);
     }
@@ -142,3 +137,45 @@ const yesButton = document.querySelector('.yesButton');
 yesButton.addEventListener('click', function(){
     location.reload(true);
 })
+
+
+
+
+
+var clear; 
+function stopWatch() {  clear = setTimeout( "stopWatch( )", 1000 ); }
+
+
+var seconds = 0, minutes = 0, hours = 0; 
+var secs, mins, gethours ;
+
+
+function startWatch() {
+  
+    if (seconds === 60) { 
+        seconds = 0; 
+        minutes = minutes + 1; 
+    }
+    mins = (minutes < 10) ? ('0' + minutes + ': ') : (minutes + ': ');  
+    console.log("Will sehen", mins);
+    if (minutes === 60) { 
+        minutes = 0; 
+        hours = hours + 1; 
+    }
+    
+    gethours = (hours < 10) ? ('0' + hours + ': ') : (hours + ': '); secs = (seconds < 10) ? ('0' + seconds) : (seconds);
+    console.log("Zweiter Teil", secs)
+    console.log(gethours);
+    var x = document.getElementById("timer");
+    x.innerHTML = gethours + mins + secs;
+    seconds++;
+    console.log(seconds)
+    
+    clearTime = setTimeout("startWatch( )", 1000);
+    setTimeout(clearTime);
+}
+
+
+
+
+
