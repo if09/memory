@@ -14,6 +14,9 @@ createHTML();
 createStars()
 activateListeners();
 
+
+
+
 function createStars() {
     for (star of starClass) {
         const starLi = document.createElement('li');
@@ -40,8 +43,6 @@ function createHTML() {
         li.innerHTML = `<i class="fa ${card}"></i>`;
         const cardDeck = document.querySelector('.deck');
         cardDeck.appendChild(li);
-     
-        
     }
 }
 
@@ -107,7 +108,7 @@ function gameWin() {
 
 
 function shuffle(array) {
-    var currentIndex = array.length,
+    let currentIndex = array.length,
         temporaryValue,
         randomIndex;
     while (currentIndex !== 0) {
@@ -142,12 +143,12 @@ yesButton.addEventListener('click', function(){
 
 
 
-var clear; 
+let clear; 
 function stopWatch() {  clear = setTimeout( "stopWatch( )", 1000 ); }
 
 
-var seconds = 0, minutes = 0, hours = 0; 
-var secs, mins, gethours ;
+let seconds = 0, minutes = 0, hours = 0; 
+let secs, mins, gethours ;
 
 
 function startWatch() {
@@ -166,14 +167,25 @@ function startWatch() {
     gethours = (hours < 10) ? ('0' + hours + ': ') : (hours + ': '); secs = (seconds < 10) ? ('0' + seconds) : (seconds);
     console.log("Zweiter Teil", secs)
     console.log(gethours);
-    var x = document.getElementById("timer");
+    const x = document.getElementById("timer");
     x.innerHTML = gethours + mins + secs;
     seconds++;
     console.log(seconds)
-    
     clearTime = setTimeout("startWatch( )", 1000);
     setTimeout(clearTime);
 }
+clearTimeout( clearTime);
+
+function resetTime() {
+    if (seconds !== 0 || minutes !== 0 || hours !== 0) {
+        seconds = 0; minutes = 0; hours = 0; secs = '0' + seconds; mins = '0' + minutes + ': '; gethours = '0' + hours + ': ';
+        let x = document.getElementById("timer"); 
+        let stopTime = gethours + mins + secs; 
+        x.innerHTML = stopTime;
+        setTimeout(clearTimeout(clearTime)); 
+    }
+}
+
 
 
 
