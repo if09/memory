@@ -57,9 +57,14 @@ function deactivateListeners() {
 }
 
 
-
+// Abfragen ob der Timer schon läuft
 
 function selectCards(e) {
+    if (seconds == 0 && minutes == 0 && hours == 0){
+        startWatch();
+    }else{
+        console.log("Timer läuft nicht");
+    }
     if (e.target.className === 'card') {
         e.target.classList.add('open', 'show');
         openCards.push(e.target);
@@ -103,7 +108,8 @@ function cardsDontMatch() {
 
 function gameWin() {
     congrats.innerHTML = "Congratulations, you have won!"
-    showModul()
+    showModul();
+    resetTime();
 }
 
 
@@ -174,7 +180,8 @@ function startWatch() {
     clearTime = setTimeout("startWatch( )", 1000);
     setTimeout(clearTime);
 }
-clearTimeout( clearTime);
+
+// clearTimeout();
 
 function resetTime() {
     if (seconds !== 0 || minutes !== 0 || hours !== 0) {
