@@ -7,35 +7,19 @@ const classList = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-pla
 let moveElement = document.querySelector(".moves");
 let restartButton = document.querySelector(".restart");
 let congrats = document.querySelector('h1');
+let tries = 2;
+x = 0;
 
 
-shuffle(classList);
-createHTML();
-createStars()
-activateListeners();
+createGame();
 
-
-
-
-function createStars() {
-    for (star of starClass) {
-        const starLi = document.createElement('li');
-        const starLi1 = document.createElement('li');
-        const starLi2 = document.createElement('li');
-        starLi.innerHTML = `<i class="fa ${starClass}"></i>`;
-        starLi1.innerHTML = `<i class="fa ${starClass}"></i>`;
-        starLi2.innerHTML = `<i class="fa ${starClass}"></i>`;
-        stars.appendChild(starLi);
-        stars.appendChild(starLi1);
-        stars.appendChild(starLi2);
-    }
-
-
+function createGame(){
+    shuffle(classList);
+    createHTML();
+    createStars()
+    activateListeners();
 }
 
-
-
-// Functionality to create Html structure
 function createHTML() {
     for (card of classList) {
         const li = document.createElement('li');
@@ -45,6 +29,25 @@ function createHTML() {
         cardDeck.appendChild(li);
     }
 }
+
+function createStars() {
+    for(i=0; i<=tries; i++){
+        const starLi = document.createElement('li');
+        starLi.innerHTML = `<i id="star`+i+`"  class="fa ${starClass}"></i>`;
+        stars.appendChild(starLi);
+    }
+}
+
+function decreaseStars() {
+    let iconStar = document.getElementById('star' + x);
+    iconStar.classList.add("hide");
+        if (x < tries) {
+            x++
+        } else {
+            gameOver()
+        }
+}
+
 
 function activateListeners() {
     const deckOfCards = document.querySelector('.deck');
@@ -56,16 +59,14 @@ function deactivateListeners() {
     deckOfCards.removeEventListener('click', selectCards);
 }
 
-
 // Abfragen ob der Timer schon läuft
 
 function selectCards(e) {
+    if (e.target.className === 'card'){
     if (seconds == 0 && minutes == 0 && hours == 0){
         startWatch();
-    }else{
-        console.log("Timer läuft nicht");
     }
-    if (e.target.className === 'card') {
+     
         e.target.classList.add('open', 'show');
         openCards.push(e.target);
         if (openCards.length === 2) {
@@ -75,7 +76,7 @@ function selectCards(e) {
 }
 
 function compareCards() {
-    moves += 1;
+    moves++;
     moveElement.innerHTML = moves
     deactivateListeners();
 
@@ -104,14 +105,16 @@ function cardsDontMatch() {
     openCards[1].classList.remove('open', 'show');
     openCards = [];
     activateListeners();
+    if (moves % 5 == 0) {
+    decreaseStars();
+    }
 }
 
 function gameWin() {
     congrats.innerHTML = "Congratulations, you have won!"
     showModul();
-    resetTime();
+    stopWatch();
 }
-
 
 function shuffle(array) {
     let currentIndex = array.length,
@@ -124,65 +127,74 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
+    console.log(array);
     return array;
 }
-
 
 restartButton.addEventListener("click", function () {
     location.reload(true);
 })
 
 
-let playAgainModul = document.querySelector('.playAgain');
+let playAgainModul = document.getElementById('modal');
 
 function showModul(){
-    playAgainModul.classList.add('showPlayAgain');
+    playAgainModul.classList.remove('is-inactive');
+    playAgainModul.classList.add('is-active');
 }
 
-const yesButton = document.querySelector('.yesButton');
+const yesButton = document.getElementById('yesButton');
 
-yesButton.addEventListener('click', function(){
+const noButton = document.getElementById('noButton');
+
+yesButton.addEventListener('click', function () {
     location.reload(true);
 })
 
-
-
-
-
-let clear; 
-function stopWatch() {  clear = setTimeout( "stopWatch( )", 1000 ); }
-
+noButton.addEventListener('click', function () {
+    playAgainModul.classList.remove('is-active');
+    playAgainModul.classList.add('is-inactive');
+})
 
 let seconds = 0, minutes = 0, hours = 0; 
 let secs, mins, gethours ;
-
-
 function startWatch() {
-  
     if (seconds === 60) { 
         seconds = 0; 
         minutes = minutes + 1; 
     }
     mins = (minutes < 10) ? ('0' + minutes + ': ') : (minutes + ': ');  
-    console.log("Will sehen", mins);
     if (minutes === 60) { 
         minutes = 0; 
         hours = hours + 1; 
     }
-    
     gethours = (hours < 10) ? ('0' + hours + ': ') : (hours + ': '); secs = (seconds < 10) ? ('0' + seconds) : (seconds);
-    console.log("Zweiter Teil", secs)
-    console.log(gethours);
     const x = document.getElementById("timer");
     x.innerHTML = gethours + mins + secs;
     seconds++;
-    console.log(seconds)
-    clearTime = setTimeout("startWatch( )", 1000);
-    setTimeout(clearTime);
+    if(stop === false){
+       setTimeout("startWatch( )", 1000);
+    }
 }
+let stop = false;
 
-// clearTimeout();
+function stopWatch() { 
+    stop = true;
+ }
 
+ function gameOver() {
+     stopWatch()
+     showModul()
+     let gameOverList = document.querySelectorAll('.card');
+    for(card of gameOverList){
+        card.classList.add("open","show");
+        if (!card.classList.contains("match")){
+            card.style.backgroundColor = "red";
+        }
+    }
+ }
+
+/* Reset time
 function resetTime() {
     if (seconds !== 0 || minutes !== 0 || hours !== 0) {
         seconds = 0; minutes = 0; hours = 0; secs = '0' + seconds; mins = '0' + minutes + ': '; gethours = '0' + hours + ': ';
@@ -192,6 +204,7 @@ function resetTime() {
         setTimeout(clearTimeout(clearTime)); 
     }
 }
+*/
 
 
 
