@@ -153,6 +153,8 @@ noButton.addEventListener('click', function () {
 let seconds = 0, minutes = 0, hours = 0; 
 let secs, mins, gethours ;
 
+// Function used internet Research to find a way to code a timer in js
+
 function startWatch() {
     if (seconds === 60) { 
         seconds = 0; 
