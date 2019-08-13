@@ -10,7 +10,6 @@ let congrats = document.querySelector('h1');
 let tries = 2;
 x = 0;
 
-
 createGame();
 
 function createGame(){
@@ -48,7 +47,6 @@ function decreaseStars() {
         }
 }
 
-
 function activateListeners() {
     const deckOfCards = document.querySelector('.deck');
     deckOfCards.addEventListener('click', selectCards);
@@ -58,8 +56,6 @@ function deactivateListeners() {
     const deckOfCards = document.querySelector('.deck');
     deckOfCards.removeEventListener('click', selectCards);
 }
-
-// Abfragen ob der Timer schon läuft
 
 function selectCards(e) {
     if (e.target.className === 'card'){
@@ -127,14 +123,12 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-    console.log(array);
     return array;
 }
 
 restartButton.addEventListener("click", function () {
     location.reload(true);
 })
-
 
 let playAgainModul = document.getElementById('modal');
 
@@ -158,6 +152,7 @@ noButton.addEventListener('click', function () {
 
 let seconds = 0, minutes = 0, hours = 0; 
 let secs, mins, gethours ;
+
 function startWatch() {
     if (seconds === 60) { 
         seconds = 0; 
@@ -176,6 +171,7 @@ function startWatch() {
        setTimeout("startWatch( )", 1000);
     }
 }
+
 let stop = false;
 
 function stopWatch() { 
@@ -194,17 +190,6 @@ function stopWatch() {
     }
  }
 
-/* Reset time
-function resetTime() {
-    if (seconds !== 0 || minutes !== 0 || hours !== 0) {
-        seconds = 0; minutes = 0; hours = 0; secs = '0' + seconds; mins = '0' + minutes + ': '; gethours = '0' + hours + ': ';
-        let x = document.getElementById("timer"); 
-        let stopTime = gethours + mins + secs; 
-        x.innerHTML = stopTime;
-        setTimeout(clearTimeout(clearTime)); 
-    }
-}
-*/
 
 
 

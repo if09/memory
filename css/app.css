@@ -122,6 +122,9 @@ h1 {
     display: none !important;
 }
 
+.restart i {
+    margin-left: 10px;
+}
 
 .modalOverlay {
     position: fixed;
@@ -162,8 +165,6 @@ h1 {
     -webkit-transform: scale(1);
 }
 
-
-
 button{
   background:#1AAB8A;
   color:#fff;
@@ -199,6 +200,10 @@ button:after{
 button:hover:before,button:hover:after{
   width:100%;
   transition:800ms ease all;
+}
+
+.moves{
+    margin-left: 10px;
 }
 
 
